@@ -286,8 +286,21 @@ export default {
           console.error("Error fetching products:", error);
         });
     },
+    async user() {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/user", {
+          headers: { "content-type": "application/json" },
+          credentials: "include",
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error("Error user: ", error);
+      }
+    },
   },
+
   mounted() {
+    this.user();
     this.getProduct();
   },
 };
