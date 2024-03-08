@@ -86,6 +86,7 @@
               Login
             </router-link>
             <router-link
+              @click="handleLogout"
               to="/login"
               class="block px-3 py-2 text-sm text-gray-800 hover:bg-gray-100"
             >
@@ -133,13 +134,24 @@ export default {
     ...mapGetters(["countCartItems"]),
   },
   methods: {
-    ...mapActions(["liveSearch"]),
+    ...mapActions(["liveSearch", "logout"]), // Include the 'logout' action
     toggleDropdown() {
       this.showDropdown = !this.showDropdown;
     },
     searchProducts() {
       this.liveSearch({ search: this.search });
       console.log(`SEARCH TERM : ${this.search}`);
+    },
+    async handleLogout() {
+      try {
+        // Dispatch the 'logout' action from Vuex
+        await this.logout();
+
+        // Optionally, you can redirect the user to the login page after logout
+        // Example: this.$router.push('/login');
+      } catch (error) {
+        console.error("Error logging out: ", error);
+      }
     },
   },
 };

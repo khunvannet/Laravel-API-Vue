@@ -289,19 +289,21 @@ export default {
     async user() {
       try {
         const response = await axios.get("http://127.0.0.1:8000/api/user", {
-          headers: { "content-type": "application/json" },
-          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${"21|144FI3dVvD0dG0HSJNYKfsUM3hrVH85eVmgWWs8e9feb45c3"}`, // Replace `yourAuthToken` with the actual token
+          },
         });
-        console.log(response.data);
+        // Assuming your backend API returns user data
+        console.log("User data:", response.data);
       } catch (error) {
-        console.error("Error user: ", error);
+        console.error("Error fetching user data: ", error);
       }
     },
   },
 
   mounted() {
-    this.user();
     this.getProduct();
+    this.user(); // Call the user method to fetch user data after component mount
   },
 };
 </script>

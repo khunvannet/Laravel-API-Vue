@@ -8,14 +8,32 @@ export default createStore({
     search: "",
     productId: "",
     productDetail: null,
+    authToken: null, // Add authToken state to store the authentication token
   },
   getters: {
     countCartItems(state) {
       return state.cartItems.length;
     },
   },
-  mutations: {},
+  mutations: {
+    setAuthToken(state, token) {
+      state.authToken = token; // Mutation to set the authentication token
+    },
+    clearAuthToken(state) {
+      state.authToken = null; // Mutation to clear the authentication token
+    },
+  },
   actions: {
+    async logout({ commit }) {
+      try {
+        await axios.post("http://127.0.0.1:8000/api/logout", {});
+
+        // Clear the authentication token from Vuex state upon successful logout
+        commit("clearAuthToken");
+      } catch (error) {
+        console.error("Error logging out: ", error);
+      }
+    },
     addToCart({ state }, item) {
       let index = state.cartItems.findIndex(
         (product) => product.id === item.id
@@ -63,5 +81,4 @@ export default createStore({
         });
     },
   },
-  modules: {},
 });
